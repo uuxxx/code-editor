@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -7,7 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     static: './dist',
     port: 3000,
@@ -16,6 +17,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve('./src/index.html'),
     }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.resolve(__dirname, 'src/public'),
+    //       to: path.resolve(__dirname, 'dist'),
+    //     },
+    //   ],
+    // }),
   ],
   module: {
     rules: [
@@ -26,11 +35,7 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
