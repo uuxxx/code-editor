@@ -11,5 +11,5 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src", ".eslintrc.js", "webpack.config.js"],
-  "exclude": ["node_momdules"]
+  "exclude": ["node_modules"]
 }

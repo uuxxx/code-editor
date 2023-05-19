@@ -21,5 +21,14 @@ module.exports = {
   },
   rules: {
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'import/no-extraneous-dependencies': ['error', {
+      devDependencies: true,
+    }],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
 };
