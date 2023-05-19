@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as esbuild from 'esbuild-wasm';
 import UnpkgPlugin from './plugins/unpkg';
 import FetchPlugin from './plugins/fetch';
 import './styles.scss';
 
 export default function App() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   useEffect(() => {
     (async () => {
       await esbuild.initialize({
@@ -14,7 +16,6 @@ export default function App() {
     })().catch(() => {});
   }, []);
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
   const compile = async () => {
     const service = await esbuild.build({
       entryPoints: ['index.js'],
@@ -29,10 +30,39 @@ export default function App() {
     });
     return service;
   };
+
   const onClick = async () => {
     const service = await compile();
-    setOutput(service.outputFiles[0].text);
+    const code = service.outputFiles[0].text;
+
+    if (iframeRef.current) {
+      iframeRef.current.contentWindow?.postMessage(code, '*');
+    }
   };
+
+  const html = /* HTML */ `
+    <html>
+      <head>
+        <script defer>
+          window.addEventListener(
+            'message',
+            ({ data }) => {
+              try {
+                eval(data);
+              } catch (e) {
+                document.body.innerHTML = \`<h3 style="color: red;">Error: \${e.message}</h3>\`;
+              }
+            },
+            false
+          );
+        </script>
+      </head>
+      <body>
+        <div id="root"></div>
+      </body>
+    </html>
+  `;
+
   return (
     <div>
       <textarea
@@ -43,7 +73,13 @@ export default function App() {
       <button type="button" onClick={onClick}>
         submit
       </button>
-      <p>{output}</p>
+
+      <iframe
+        ref={iframeRef}
+        title="preview"
+        srcDoc={html}
+        sandbox="allow-scripts"
+      />
     </div>
   );
 }
