@@ -1,0 +1,33 @@
+.resizer {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: row-resize;
+}
+
+.resizer div {
+  width: 5px;
+  height: 5px;
+  opacity: 0.6;
+  border-radius: 50%;
+  background: white;
+}
+
+.horizontal {
+  position: relative;
+  z-index: 100;
+  min-width: 20px;
+  flex-direction: column;
+  cursor: col-resize;
+}
+
+.vertical {
+  position: absolute;
+  height: 20px;
+  bottom: 0px;
+  right: 0;
+  left: 0;
+  z-index: 200;
+}

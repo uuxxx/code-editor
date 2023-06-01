@@ -34,9 +34,9 @@ export default function CodeEditor({
         Format
       </button>
       <MonacoEditor
-        height="500px"
         language="javascript"
         theme="vs-dark"
+        height="100%"
         options={{
           wordWrap: 'on',
           minimap: { enabled: false },
