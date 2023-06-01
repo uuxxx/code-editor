@@ -19,9 +19,11 @@
     "monaco-editor": "^0.38.0",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-resizable": "^3.0.5"
   },
   "devDependencies": {
+    "@types/react-resizable": "^3.0.4",
     "@types/node": "^20.1.0",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.2.6",
