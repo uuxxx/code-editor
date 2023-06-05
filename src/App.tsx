@@ -1,6 +1,6 @@
 import React from 'react';
-import CodeCell from './components/code-cell';
+import Markdown from './components/markdown';
 
 export default function App() {
-  return <CodeCell />;
+  return <Markdown />;
 }
