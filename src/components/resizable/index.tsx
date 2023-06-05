@@ -49,7 +49,7 @@ export default function Resizable({ children, direction }: ResizableProps) {
     };
   } else {
     boxProps = {
-      minConstraints: [Infinity, 60],
+      minConstraints: [Infinity, 160],
       maxConstraints: [Infinity, screenHeight * 0.9],
       height: 300,
       width: Infinity,

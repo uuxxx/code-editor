@@ -1,0 +1,49 @@
+.markdown__container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.markdown__content-editable {
+  flex: 1;
+  margin-top: 3px;
+  padding: 20px;
+  outline: none;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-y: auto;
+  border: 1px solid black;
+}
+
+.markdown__content-editable:empty:not(:focus):before {
+  content: attr(data-ph);
+  color: gray;
+}
+
+.markdown__navbar {
+  height: 30px;
+}
+
+.markdown__navbar-item {
+  cursor: pointer;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
