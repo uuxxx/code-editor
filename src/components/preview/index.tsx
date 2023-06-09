@@ -9,7 +9,7 @@ const html = /* HTML */ `
           document.body.innerHTML = \`<h3 style="color: red;">Error: \${e.message}</h3>\`;
         };
 
-        window.addEventListener('error', (e) =>  {
+        window.addEventListener('error', (e) => {
           e.preventDefault();
           handleError(e);
         });
@@ -29,9 +29,13 @@ const html = /* HTML */ `
           false
         );
       </script>
+      <style>
+        body {
+          background: white;
+        }
+      </style>
     </head>
-    <body>
-    </body>
+    <body></body>
   </html>
 `;
 

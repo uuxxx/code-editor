@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Resizable from '../resizable';
+import { useActions } from '../../redux/hooks';
 import './styles.css';
+import ActionBar from '../action-bar';
 
 interface MarkdownProps {
+  cellId: string;
   mode?: 'preview' | 'edit';
+  value: string;
 }
 
 type Align = 'left' | 'center' | 'right' | '';
@@ -26,10 +30,20 @@ const navbarIcons = [
   NavBarButtons.FORMAT_ALIGN_RIGHT,
 ];
 
-function Markdown({ mode }: MarkdownProps) {
+function Markdown({ mode, value, cellId }: MarkdownProps) {
   const [bold, setBold] = useState<Bold>('');
   const [italic, setItalic] = useState<Italic>('');
   const [align, setAlign] = useState<Align>('left');
+  const [input, setInput] = useState(value);
+
+  const { update } = useActions();
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      update({ id: cellId, newContent: input });
+    }, 1000);
+    return () => clearTimeout(id);
+  }, [input]);
 
   const onNavBarClick = (e: React.MouseEvent) => {
     let { id } = e.target as HTMLButtonElement | HTMLSpanElement;
@@ -64,29 +78,34 @@ function Markdown({ mode }: MarkdownProps) {
         {mode === 'edit' ? (
           <>
             <div onClick={onNavBarClick} className="markdown__navbar">
-              {navbarIcons.map((name) => (
-                <button
-                  key={name}
-                  type="button"
-                  className="markdown__navbar-item"
-                  id={`markdown__navbar-btn ${name}`}
-                >
-                  <span
+              <span>
+                {navbarIcons.map((name) => (
+                  <button
+                    key={name}
+                    type="button"
+                    className="markdown__navbar-item"
                     id={`markdown__navbar-btn ${name}`}
-                    className="material-symbols-outlined"
                   >
-                    {name}
-                  </span>
-                </button>
-              ))}
+                    <span
+                      id={`markdown__navbar-btn ${name}`}
+                      className="material-symbols-outlined"
+                    >
+                      {name}
+                    </span>
+                  </button>
+                ))}
+              </span>
+
+              <ActionBar id={cellId} type="text" />
             </div>
-            <div
-              contentEditable="true"
+            <textarea
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              data-ph="Напечатайте, что-нибудь..."
-              className={`markdown__content-editable ${bold} ${italic} ${align}`}
+              placeholder="Напечатайте, что-нибудь..."
+              className={`markdown__textarea ${bold} ${italic} ${align}`}
             />
           </>
         ) : (

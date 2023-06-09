@@ -1,0 +1,6 @@
+.cell-list-item__action-bar.code {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid black;
+  background: #2B3E50;
+}

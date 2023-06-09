@@ -1,0 +1,13 @@
+.cell-list__action-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  background: #2B3E50;
+}
+
+.cell-list__action-bar button {
+  background: #df691a !important;
+  color: #fff;
+} 

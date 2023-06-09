@@ -34,5 +34,6 @@ module.exports = {
         checksVoidReturn: false,
       },
     ],
+    'no-param-reassign': ['error', { props: false }],
   },
 };

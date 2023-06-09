@@ -1,6 +1,12 @@
 import React from 'react';
-import Markdown from './components/markdown';
+import { Provider } from 'react-redux';
+import CellList from './components/cell-list';
+import store from './redux';
 
 export default function App() {
-  return <Markdown />;
+  return (
+    <Provider store={store}>
+      <CellList />
+    </Provider>
+  );
 }
