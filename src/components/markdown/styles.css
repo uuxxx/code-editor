@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.markdown__content-editable {
+.markdown__textarea {
   flex: 1;
   margin-top: 3px;
   padding: 20px;
@@ -12,16 +12,16 @@
   word-wrap: break-word;
   word-break: break-all;
   overflow-y: auto;
+  background: transparent;
+  color: white;
   border: 1px solid black;
-}
-
-.markdown__content-editable:empty:not(:focus):before {
-  content: attr(data-ph);
-  color: gray;
 }
 
 .markdown__navbar {
   height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .markdown__navbar-item {

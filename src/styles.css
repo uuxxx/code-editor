@@ -1,0 +1,7 @@
+@import 'bulma/css/bulma.min.css';
+
+body {
+  background-color: #1f2d3b;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}

@@ -1,0 +1,31 @@
+.cell-list-item__container {
+  position: relative;
+  margin: 0 0 20px 0;
+}
+
+.cell-list-item__container:last-child {
+  margin-bottom: 0;
+}
+
+
+.cell-item.enter-active {
+  opacity: 0;
+}
+
+.cell-item.enter-done {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.cell-item.exit-active {
+  opacity: 1;
+}
+
+.cell-item.exit-done {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+
+
+

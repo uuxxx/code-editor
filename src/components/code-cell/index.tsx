@@ -4,15 +4,25 @@ import Preview from '../preview';
 import Resizable from '../resizable';
 import useBundler from '../../bundler';
 import './styles.css';
+import { useActions } from '../../redux/hooks';
 
-export default function CodeCell() {
+interface CodeCellProps {
+  cellId: string;
+  value: string;
+}
+
+export default function CodeCell({ value, cellId }: CodeCellProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(value);
+  const { update } = useActions();
 
   const compile = useBundler(iframeRef, input);
 
   useEffect(() => {
-    const id = setTimeout(compile, 1000);
+    const id = setTimeout(() => {
+      update({ id: cellId, newContent: input });
+      compile().catch(() => {});
+    }, 1000);
     return () => clearTimeout(id);
   }, [input]);
 
