@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useActions } from '../../redux/hooks';
 import './styles.css';
 
@@ -18,20 +19,24 @@ export default function AddCellBar({ id }: AddCellBarProps) {
   };
   return (
     <div className="cell-list__action-bar">
-      <button
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={addMarkdown}
         className="button is-primary is-rounded is-hovered"
         type="button"
       >
         + Text
-      </button>
-      <button
+      </motion.button>
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={addCodeCell}
         className="button is-primary is-rounded is-hovered"
         type="button"
       >
         + Code
-      </button>
+      </motion.button>
     </div>
   );
 }
