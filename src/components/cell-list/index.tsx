@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AnimatePresence, Reorder } from 'framer-motion';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '@store/hooks';
+import useBundler from '@bundler';
+import typedPostMessage from 'src/communicationWithIframes';
+import { Actions } from 'src/communicationWithIframes/types';
 import AddCellBar from '../add-cell-bar';
 import CellListItem from '../cell-list-item';
 
 export default function CellList() {
   const { data, order } = useAppSelector((state) => state.cells);
+  const compile = useBundler();
+
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      const { type, payload } = event.data as {
+        type: string;
+        payload: number;
+      };
+      if (type === Actions.SAVED_CODE_REQUIRED) {
+        const codeToExecute = data[payload]?.content;
+        if (codeToExecute) {
+          compile(codeToExecute)
+            .then((res) => {
+              typedPostMessage(event.source, res);
+            })
+            .catch(() => {});
+        }
+      }
+    };
+    window.addEventListener('message', onMessage);
+
+    return () => window.removeEventListener('message', onMessage);
+  }, [data]);
 
   return (
     <div className="cell-list__container">

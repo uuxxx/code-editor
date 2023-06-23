@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import * as esbuild from 'esbuild-wasm';
+import { Message } from 'src/communicationWithIframes/types';
 import UnpkgPlugin from './plugins/unpkg';
 import FetchPlugin from './plugins/fetch';
 
-export default function useBundler(
-  iframeRef: React.RefObject<HTMLIFrameElement>,
-  input: string,
-) {
+export default function useBundler() {
   useEffect(() => {
     (async () => {
       await esbuild.initialize({
@@ -16,7 +14,7 @@ export default function useBundler(
     })().catch(() => {});
   }, []);
 
-  const compile = async () => {
+  const compile = async (input: string) => {
     const service = await esbuild.build({
       entryPoints: ['index.js'],
       target: 'es2015',
@@ -31,21 +29,19 @@ export default function useBundler(
     return service;
   };
 
-  return async () => {
-    let result: { ok: boolean; text: string } = { ok: true, text: '' };
+  return async (input: string) => {
+    let result: Message;
     try {
-      const service = await compile();
+      const service = await compile(input);
       const code = service.outputFiles[0].text;
-      result = { ok: true, text: code };
+      result = { ok: true, text: code, actionType: 'CODE_EXECUTION_REQUIRED' };
     } catch (e) {
-      result = { ok: false, text: (e as Error).message || 'unexpected Error' };
-    } finally {
-      if (iframeRef.current) {
-        iframeRef.current.contentWindow?.postMessage(
-          JSON.stringify(result),
-          '*',
-        );
-      }
+      result = {
+        ok: false,
+        text: (e as Error).message || 'unexpected Error',
+        actionType: 'CODE_EXECUTION_REQUIRED',
+      };
     }
+    return result;
   };
 }

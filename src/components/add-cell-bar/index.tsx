@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useActions } from '../../redux/hooks';
+import { useActions } from '@store/hooks';
 import './styles.css';
 
 interface AddCellBarProps {

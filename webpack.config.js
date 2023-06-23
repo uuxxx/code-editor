@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -17,14 +17,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve('./src/index.html'),
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'src/iframe'),
-    //       to: path.resolve(__dirname, 'dist/iframe'),
-    //     },
-    //   ],
-    // }),
   ],
   module: {
     rules: [
@@ -44,6 +36,7 @@ module.exports = {
     ],
   },
   resolve: {
+    plugins: [new TsconfigPathsPlugin()],
     extensions: ['.tsx', '.ts', '.js'],
   },
 };

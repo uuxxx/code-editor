@@ -1,6 +1,6 @@
 import React from 'react';
-import { useActions } from '../../redux/hooks';
-import { CellType } from '../../redux/types/cell';
+import { CellType } from '@store/types/cell';
+import { useActions } from '@store/hooks';
 import './styles.css';
 
 interface ActionBarProps {

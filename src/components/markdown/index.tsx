@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useActions } from '@store/hooks';
 import Resizable from '../resizable';
-import { useActions } from '../../redux/hooks';
 import './styles.css';
 import ActionBar from '../action-bar';
 
