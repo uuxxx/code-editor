@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import store from '@store';
 import CellList from './components/cell-list';
-import store from './redux';
 
 export default function App() {
   return (
