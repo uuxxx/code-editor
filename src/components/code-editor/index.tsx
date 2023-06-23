@@ -1,29 +1,59 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
+import { useActions, useAppSelector } from '@store/hooks';
+import { Actions } from 'src/communicationWithIframes/types';
+import typedPostMessage from 'src/communicationWithIframes';
+import CellListItemContext from '../cell-list-item/context';
 import './code-editor.css';
 
 interface CodeEditorProps {
-  value: string;
-  onChangeCallback: (e?: string) => void;
+  iframeRef: React.RefObject<HTMLIFrameElement>;
 }
 
-export default function CodeEditor({
-  value,
-  onChangeCallback,
-}: CodeEditorProps) {
+export default function CodeEditor({ iframeRef }: CodeEditorProps) {
+  const { update } = useActions();
+  const { id } = useContext(CellListItemContext);
+  const { content } = useAppSelector((state) => {
+    const cell = state.cells.data[id];
+    if (cell) {
+      return cell;
+    }
+
+    return { content: '' };
+  });
+
+  const [codeEditorValue, setCodeEditorValue] = useState(content);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      update({ id, newContent: codeEditorValue });
+      if (iframeRef.current) {
+        typedPostMessage(iframeRef.current.contentWindow, {
+          ok: true,
+          actionType: Actions.RELOAD_REQUIRED,
+          text: '',
+        });
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [codeEditorValue]);
+
   const onClick = () => {
     const formated = prettier
-      .format(value, {
+      .format(content, {
         parser: 'babel',
         plugins: [parser],
         semi: true,
         singleQuote: true,
       })
       .replace(/\n$/, '');
-    onChangeCallback(formated);
+    setCodeEditorValue(formated);
   };
+
   return (
     <div className="editor-wrapper">
       <button
@@ -48,8 +78,8 @@ export default function CodeEditor({
           automaticLayout: true,
           tabSize: 2,
         }}
-        value={value}
-        onChange={onChangeCallback}
+        value={codeEditorValue}
+        onChange={(value) => setCodeEditorValue(value as string)}
       />
     </div>
   );
