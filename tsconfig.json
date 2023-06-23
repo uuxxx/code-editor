@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src"],
+      "@components/*": ["src/components/*"],
+      "@store": ["src/redux"],
+      "@store/*": ["src/redux/*"],
+      "@bundler": ["src/bundler"],
+      "@bundler/*": ["src/bundler/*"],
+    },
     "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "es6",

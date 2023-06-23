@@ -12,6 +12,17 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   plugins: ['import', '@typescript-eslint/eslint-plugin'],
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
+      },
+    },
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.json'],
