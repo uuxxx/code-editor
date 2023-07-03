@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useState, useRef,
+} from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
@@ -13,6 +15,7 @@ interface CodeEditorProps {
 }
 
 export default function CodeEditor({ iframeRef }: CodeEditorProps) {
+  const isFirstRender = useRef(true);
   const { update } = useActions();
   const { id } = useContext(CellListItemContext);
   const { content } = useAppSelector((state) => {
@@ -27,6 +30,10 @@ export default function CodeEditor({ iframeRef }: CodeEditorProps) {
   const [codeEditorValue, setCodeEditorValue] = useState(content);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return () => {}; // eslint ругается, если просто return сделать
+    }
     const timeoutId = setTimeout(() => {
       update({ id, newContent: codeEditorValue });
       if (iframeRef.current) {

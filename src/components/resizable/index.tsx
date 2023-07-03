@@ -58,13 +58,28 @@ export default function Resizable({ children, direction }: ResizableProps) {
     };
   }
 
+  if (direction === 'x') {
+    return (
+      <ReactResizableComponent
+        {...boxProps}
+        handle={(
+          <div className="resizer horizontal">
+            <div />
+            <div />
+            <div />
+          </div>
+        )}
+      >
+        {children}
+      </ReactResizableComponent>
+    );
+  }
+
   return (
     <ReactResizableComponent
       {...boxProps}
       handle={(
-        <div
-          className={`resizer ${direction === 'x' ? 'horizontal' : 'vertical'}`}
-        >
+        <div className="resizer vertical">
           <div />
           <div />
           <div />

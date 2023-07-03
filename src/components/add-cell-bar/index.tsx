@@ -17,8 +17,15 @@ export default function AddCellBar({ id }: AddCellBarProps) {
   const addCodeCell = () => {
     insertBefore({ type: 'code', id });
   };
+
   return (
-    <div className="cell-list__action-bar">
+    <motion.div
+      className="cell-list__action-bar"
+      transition={{ delay: 0.35 }}
+      initial={{ opacity: 0, right: -500 }}
+      animate={{ opacity: 1, right: 0 }}
+      exit={{ opacity: 0, right: 500 }}
+    >
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -37,6 +44,6 @@ export default function AddCellBar({ id }: AddCellBarProps) {
       >
         + Code
       </motion.button>
-    </div>
+    </motion.div>
   );
 }
