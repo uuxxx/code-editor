@@ -38,8 +38,13 @@ export default function CellList() {
       <Reorder.Group axis="y" values={order} onReorder={() => {}}>
         <AnimatePresence>
           {order.length ? (
-            order.map((key) => (
-              <Reorder.Item dragListener={false} key={key} value={data[key]}>
+            order.map((key, i) => (
+              <Reorder.Item
+                dragListener={false}
+                key={key}
+                value={data[key]}
+                style={{ marginTop: i > 0 ? '20px' : 0 }}
+              >
                 <CellListItem cell={data[key]} />
               </Reorder.Item>
             ))
