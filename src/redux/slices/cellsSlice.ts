@@ -10,16 +10,23 @@ interface CellsState {
   order: string[];
 }
 
-const initialState: CellsState = {
-  data: {},
-  loading: false,
-  error: null,
-  order: [],
-};
+function initialState(): CellsState {
+  const dataFromLS = localStorage.getItem('cells');
+  if (dataFromLS) {
+    return JSON.parse(dataFromLS) as CellsState;
+  }
+
+  return {
+    data: {},
+    loading: false,
+    error: null,
+    order: [],
+  };
+}
 
 const cellsSlice = createSlice({
   name: 'cells',
-  initialState,
+  initialState: initialState(),
   reducers: {
     update: (state, { payload }: PayloadAction<UpdateCell>) => {
       const { id, newContent } = payload;
