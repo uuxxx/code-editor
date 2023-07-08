@@ -1,20 +1,18 @@
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import * as esbuild from 'esbuild-wasm';
 import { Message } from 'src/communicationWithIframes/types';
+import initialize from './initializeEsBuild';
 import UnpkgPlugin from './plugins/unpkg';
 import FetchPlugin from './plugins/fetch';
 
 export default function useBundler() {
-  useEffect(() => {
-    (async () => {
-      await esbuild.initialize({
-        worker: true,
-        wasmURL: 'https://unpkg.com/esbuild-wasm@0.17.19/esbuild.wasm',
-      });
-    })().catch(() => {});
-  }, []);
+  const wasInitialized = useRef(false);
 
   const compile = async (input: string) => {
+    if (!wasInitialized.current) {
+      await initialize();
+      wasInitialized.current = true;
+    }
     const service = await esbuild.build({
       entryPoints: ['index.js'],
       target: 'es2015',

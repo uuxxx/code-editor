@@ -45,6 +45,9 @@ module.exports = {
         checksVoidReturn: false,
       },
     ],
+    '@typescript-eslint/no-unsafe-assignment': 0,
     'no-param-reassign': ['error', { props: false }],
+    'no-prototype-builtins': 0,
+    'operator-linebreak': ['error', 'after'],
   },
 };

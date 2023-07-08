@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode=production",
-    "start": "webpack serve --mode=development --open",
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
+    "start": "cross-env NODE_ENV=development webpack serve --mode=development --open",
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "keywords": [],
@@ -26,6 +26,7 @@
     "react-resizable": "^3.0.5"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "@types/node": "^20.1.0",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.2.6",
