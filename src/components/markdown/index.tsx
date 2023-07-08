@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useActions } from '@store/hooks';
 import Resizable from '../resizable';
-import './styles.css';
 import ActionBar from '../action-bar';
+import './styles.css';
 
 interface MarkdownProps {
   cellId: string;
@@ -38,7 +38,13 @@ function Markdown({ mode, value, cellId }: MarkdownProps) {
 
   const { update } = useActions();
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return () => {};
+    }
     const id = setTimeout(() => {
       update({ id: cellId, newContent: input });
     }, 1000);
