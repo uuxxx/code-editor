@@ -1,18 +1,10 @@
-import { useRef } from 'react';
 import * as esbuild from 'esbuild-wasm';
 import { Message } from 'src/communicationWithIframes/types';
-import initialize from './initializeEsBuild';
 import UnpkgPlugin from './plugins/unpkg';
 import FetchPlugin from './plugins/fetch';
 
 export default function useBundler() {
-  const wasInitialized = useRef(false);
-
   const compile = async (input: string) => {
-    if (!wasInitialized.current) {
-      await initialize();
-      wasInitialized.current = true;
-    }
     const service = await esbuild.build({
       entryPoints: ['index.js'],
       target: 'es2015',
