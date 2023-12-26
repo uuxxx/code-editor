@@ -5,7 +5,7 @@ import CellsListItemContext from '../cell-list-item/context';
 import './styles.css';
 
 const html = (id: string) => /* HTML */ {
-  const message: MessageFromIframe = {
+  const onLoadMessage: MessageFromIframe = {
     type: Actions.SAVED_CODE_REQUIRED,
     payload: id,
   };
@@ -18,7 +18,7 @@ const html = (id: string) => /* HTML */ {
           background: #fff;
         }
       </style>
-      <script defer>
+      <script defer>      
         const handleError = (e) => {
           const body = document.body;
           body.innerHTML = \`<h3 style="color: red;">Error: \${e.message}</h3>\`;
@@ -26,7 +26,7 @@ const html = (id: string) => /* HTML */ {
         };
 
         function onLoad() {
-          const message = ${stringified(message)};
+          const message = ${stringified(onLoadMessage)};
           window.parent.postMessage(message, '*');
         }
 
