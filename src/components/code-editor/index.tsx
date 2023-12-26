@@ -50,7 +50,7 @@ export default function CodeEditor({ iframeRef }: CodeEditorProps) {
   }, [codeEditorValue]);
 
   const onClick = () => {
-    const formated = prettier
+    const formatted = prettier
       .format(content, {
         parser: 'babel',
         plugins: [parser],
@@ -58,7 +58,7 @@ export default function CodeEditor({ iframeRef }: CodeEditorProps) {
         singleQuote: true,
       })
       .replace(/\n$/, '');
-    setCodeEditorValue(formated);
+    setCodeEditorValue(formatted);
   };
 
   return (
