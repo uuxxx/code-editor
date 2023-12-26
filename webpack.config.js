@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -20,6 +21,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve('./src/index.html'),
     }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new MiniCssExtractPlugin(),
   ],
   module: {
@@ -27,7 +32,7 @@ module.exports = {
       {
         test: /\.(js|jsx|tsx|ts)$/,
         exclude: /node_modules/,
-        loader: isProd ? 'babel-loader' : 'ts-loader',
+        loader: 'babel-loader',
       },
       {
         test: /\.css$/i,
@@ -38,5 +43,11 @@ module.exports = {
   resolve: {
     plugins: [new TsconfigPathsPlugin()],
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    fallback: {
+      fs: false,
+      path: 'path-browserify',
+      os: false,
+      buffer: require.resolve('buffer'),
+    },
   },
 };
