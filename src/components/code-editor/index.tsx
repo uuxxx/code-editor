@@ -1,7 +1,8 @@
 import React, {
   useContext, useEffect, useState, useRef,
 } from 'react';
-import MonacoEditor from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
+import MonacoEditor, { loader } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import { useActions, useAppSelector } from '@store/hooks';
@@ -9,6 +10,8 @@ import { Actions } from 'src/communicationWithIframes/types';
 import typedPostMessage from 'src/communicationWithIframes';
 import CellListItemContext from '../cell-list-item/context';
 import './code-editor.css';
+
+loader.config({ monaco });
 
 interface CodeEditorProps {
   iframeRef: React.RefObject<HTMLIFrameElement>;

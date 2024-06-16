@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -26,6 +27,7 @@ module.exports = {
       Buffer: ['buffer', 'Buffer'],
     }),
     new MiniCssExtractPlugin(),
+    new MonacoWebpackPlugin(),
   ],
   module: {
     rules: [
